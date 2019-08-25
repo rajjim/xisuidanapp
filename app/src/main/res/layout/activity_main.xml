@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".MainActivity">
+
+        <LinearLayout android:layout_height="fill_parent" android:layout_width="fill_parent" android:orientation="horizontal" android:layout_weight="1.0" android:padding="3.0px">
+
+            <Button android:layout_height="fill_parent" android:layout_width="fill_parent" android:layout_weight="1.0" android:text="数字记忆" android:background="@drawable/btnums" android:id="@+id/btnum" android:textColor="@color/white" android:textStyle="bold"/>
+
+
+            <LinearLayout android:layout_height="fill_parent" android:layout_width="fill_parent" android:orientation="vertical" android:layout_weight="1.0" android:paddingLeft="3.0px">
+
+                <Button android:layout_height="fill_parent" android:layout_width="fill_parent" android:layout_weight="1.0" android:text="词汇记忆" android:background="@drawable/btcis" android:id="@+id/btci" android:textColor="@color/white" android:textStyle="bold"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+        <LinearLayout android:layout_height="fill_parent" android:layout_width="fill_parent" android:orientation="horizontal" android:layout_weight="1.0" android:padding="3.0px">
+
+            <Button android:layout_height="fill_parent" android:layout_width="fill_parent" android:layout_weight="1.0" android:text="扑克牌记忆" android:background="@drawable/btpus" android:id="@+id/btpu" android:textColor="@color/white" android:textStyle="bold"/>
+
+            <LinearLayout android:layout_height="fill_parent" android:layout_width="fill_parent" android:orientation="vertical" android:layout_weight="1.0" android:paddingLeft="3.0px">
+
+                <Button android:layout_height="fill_parent" android:layout_width="fill_parent" android:layout_weight="1.0" android:text="地点记忆" android:background="@drawable/btdds" android:id="@+id/btdd" android:textColor="@color/white" android:textStyle="bold"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+</LinearLayout>
+
