@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".ciresult"></activity>
+        <activity android:name=".numresult"></activity>
+        <activity android:name=".ciresult" />
         <activity android:name=".ddjiyi" />
         <activity android:name=".ddhistory" />
         <activity android:name=".didian" />

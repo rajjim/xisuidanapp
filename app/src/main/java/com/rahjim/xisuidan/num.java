@@ -33,6 +33,7 @@ public class num extends AppCompatActivity {
             {
                 Intent intent = new Intent(num.this, numhistory.class);
                 num.this.startActivity(intent);
+                finish();
             }
         });
         this.rg = ((RadioGroup)findViewById(R.id.rg));
@@ -51,8 +52,33 @@ public class num extends AppCompatActivity {
             public void onClick(View paramAnonymousView)
             {
                 Intent intent = new Intent(num.this, numjiyi.class);
-                intent.putExtra("level", num.this.et.getText().toString());
+                int level=5;
+                String levelstring=num.this.et.getText().toString().trim();
+                switch(levelstring){
+                    case "10个数字":{
+                        level = 10;
+                        break;
+                    }
+                    case "20个数字":{
+                        level = 20;
+                        break;
+                    }
+                    case "40个数字":{
+                        level = 40;
+                        break;
+                    }
+                    case "100个数字":{
+                        level = 100;
+                        break;
+                    }
+                    case "200个数字":{
+                        level = 200;
+                        break;
+                    }
+                }
+                intent.putExtra("level", level);
                 num.this.startActivity(intent);
+                finish();
             }
         });
         this.btret=(Button)findViewById(R.id.btret);

@@ -18,7 +18,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class ciresult extends AppCompatActivity {
+public class numresult extends AppCompatActivity {
 
     Button btret;
     Button btagain;
@@ -50,9 +50,9 @@ public class ciresult extends AppCompatActivity {
         btret.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(ciresult.this, ci.class);
+                Intent intent = new Intent(numresult.this, num.class);
                 intent.putExtra("level", level);
-                ciresult.this.startActivity(intent);
+                numresult.this.startActivity(intent);
                 finish();
             }
         });
@@ -67,9 +67,9 @@ public class ciresult extends AppCompatActivity {
         btagain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(ciresult.this, cijiyi.class);
+                Intent intent = new Intent(numresult.this, numjiyi.class);
                 intent.putExtra("level", level);
-                ciresult.this.startActivity(intent);
+                numresult.this.startActivity(intent);
                 finish();
             }
         });
@@ -94,7 +94,7 @@ public class ciresult extends AppCompatActivity {
         String titletext="用时："+timeIntToString(time)+"，正确率："+wrrate;
         tvtitle.setText(titletext);
 
-        LinearLayout hll=new LinearLayout(ciresult.this);
+        LinearLayout hll=new LinearLayout(numresult.this);
         hll.setGravity(Gravity.CENTER);
         hll.setPadding(0, 5, 0, 0);
         hll.setLayoutParams(new ViewGroup.LayoutParams(-1, -2));
@@ -107,28 +107,26 @@ public class ciresult extends AppCompatActivity {
             wrongindex=-1;
         else
             wrongindex=wrongindexs.get(wrongxiabiao++);
-        for(int ii=0;ii<ciresult.this.level;ii++){
+        for(int ii=0;ii<numresult.this.level;ii++){
 
-            EditText et=new EditText(ciresult.this);
+            EditText et=new EditText(numresult.this);
             et.setText(answerlist.get(ii));
             et.setTextAlignment(EditText.TEXT_ALIGNMENT_CENTER);
-            et.setLayoutParams(new ViewGroup.LayoutParams(ciresult.this.width / 5, -2));
+            et.setLayoutParams(new ViewGroup.LayoutParams(numresult.this.width / 11, -2));
+            et.setFilters(new InputFilter[] { new InputFilter.LengthFilter(1) });
+            et.setInputType(2);
             et.setFocusable(false);
             et.setInputType(0);
-            et.setPadding(0, 0, 0, 0);
-            et.setGravity(17);
-            et.setFilters(new InputFilter[] { new InputFilter.LengthFilter(4) });
-            et.setTextSize(0, ciresult.this.width / 23);
             if(wrongindex==ii){
                 et.setBackgroundColor(Color.RED);
                 if(wrongxiabiao+1<=wrongcount)
-                 wrongindex=wrongindexs.get(wrongxiabiao++);
+                    wrongindex=wrongindexs.get(wrongxiabiao++);
             }
             hll.addView(et);
 
-            if((ii+1)%5==0){
+            if((ii+1)%10==0){
                 resultll.addView(hll);
-                hll=new LinearLayout(ciresult.this);
+                hll=new LinearLayout(numresult.this);
                 hll.setGravity(Gravity.CENTER);
                 hll.setPadding(0, 5, 0, 0);
                 hll.setLayoutParams(new ViewGroup.LayoutParams(-1, -2));
@@ -136,33 +134,31 @@ public class ciresult extends AppCompatActivity {
                 hll.setGravity(1);
             }
         }
-        TextView tvright=new TextView(ciresult.this);
+        TextView tvright=new TextView(numresult.this);
         tvright.setText("正确答案");
         tvright.setTextAlignment(EditText.TEXT_ALIGNMENT_CENTER);
         tvright.setGravity(1);
         resultll.addView(tvright);
-        hll=new LinearLayout(ciresult.this);
+        hll=new LinearLayout(numresult.this);
         hll.setGravity(Gravity.CENTER);
         hll.setPadding(0, 5, 0, 0);
         hll.setLayoutParams(new ViewGroup.LayoutParams(-1, -2));
         hll.setOrientation(LinearLayout.HORIZONTAL);
         hll.setGravity(1);
-        for(int ii=0;ii<ciresult.this.level;ii++){
-            EditText et=new EditText(ciresult.this);
+        for(int ii=0;ii<numresult.this.level;ii++){
+            EditText et=new EditText(numresult.this);
             et.setText(randomStrings.get(ii));
             et.setTextAlignment(EditText.TEXT_ALIGNMENT_CENTER);
-            et.setLayoutParams(new ViewGroup.LayoutParams(ciresult.this.width / 5, -2));
+            et.setLayoutParams(new ViewGroup.LayoutParams(numresult.this.width / 11, -2));
+            et.setFilters(new InputFilter[] { new InputFilter.LengthFilter(1) });
+            et.setInputType(2);
             et.setFocusable(false);
             et.setInputType(0);
-            et.setPadding(0, 0, 0, 0);
-            et.setGravity(17);
-            et.setFilters(new InputFilter[] { new InputFilter.LengthFilter(4) });
-            et.setTextSize(0, ciresult.this.width / 23);
             hll.addView(et);
 
-            if((ii+1)%5==0){
+            if((ii+1)%10==0){
                 resultll.addView(hll);
-                hll=new LinearLayout(ciresult.this);
+                hll=new LinearLayout(numresult.this);
                 hll.setGravity(Gravity.CENTER);
                 hll.setPadding(0, 5, 0, 0);
                 hll.setLayoutParams(new ViewGroup.LayoutParams(-1, -2));

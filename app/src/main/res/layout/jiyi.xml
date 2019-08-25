@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical" xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <Button android:layout_gravity="center_horizontal" android:id="@+id/jiyibtstart"  android:layout_width="match_parent" android:layout_height="match_parent" android:layout_weight="33" android:text="开始记忆" />
+    <ScrollView android:id="@+id/sv" android:layout_width="match_parent" android:layout_height="match_parent"  android:layout_weight="5">
+        <LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="wrap_content">
+            <LinearLayout android:orientation="vertical" android:id="@+id/jiyill" android:background="@drawable/border" android:layout_width="fill_parent" android:layout_height="match_parent" />
+        </LinearLayout>
+    </ScrollView>
+
+    <Button android:id="@+id/jiyibtok" android:layout_width="match_parent" android:layout_height="match_parent" android:layout_weight="33" android:text="已经记好了" android:layout_centerHorizontal="true" />
+
+</LinearLayout>

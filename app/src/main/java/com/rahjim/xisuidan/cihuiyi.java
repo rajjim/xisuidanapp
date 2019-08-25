@@ -40,7 +40,7 @@ public class cihuiyi extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_cihuiyi);
+        setContentView(R.layout.huiyi);
         Display display = getWindowManager().getDefaultDisplay();
         Point localPoint = new Point();
         display.getSize(localPoint);

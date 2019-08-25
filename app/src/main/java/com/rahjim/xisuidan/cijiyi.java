@@ -112,7 +112,7 @@ public class cijiyi extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_cijiyi);
+        setContentView(R.layout.jiyi);
         Display display = getWindowManager().getDefaultDisplay();
         Point localPoint = new Point();
         display.getSize(localPoint);
@@ -122,6 +122,7 @@ public class cijiyi extends AppCompatActivity {
         jiyill=(LinearLayout)findViewById(R.id.jiyill);
         cijiyibtstart=(Button)findViewById(R.id.jiyibtstart);
         jiyibtok=(Button)findViewById(R.id.jiyibtok);
+        jiyibtok.setEnabled(false);
         level=b.getInt("level");
 
         this.randomStrings=getRandomStrings();
@@ -129,6 +130,7 @@ public class cijiyi extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 cijiyibtstart.setClickable(false);
+                jiyibtok.setEnabled(true);
                 LinearLayout hll=new LinearLayout(cijiyi.this);
                 hll.setGravity(Gravity.CENTER);
                 hll.setPadding(0, 5, 0, 0);
