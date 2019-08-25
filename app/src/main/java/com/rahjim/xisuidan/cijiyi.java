@@ -51,9 +51,9 @@ public class cijiyi extends AppCompatActivity {
     int height;
     int level;
     int width;
-    String[] randomStrings;
+    ArrayList<String> randomStrings;
     int zongmiao = 0;
-    Timer timer;
+
     boolean isstop = true;
 
     Handler mHandler = new Handler()
@@ -75,14 +75,7 @@ public class cijiyi extends AppCompatActivity {
         }
     };
 
-    public String shuzitomiao(int shuzi){
-        String shijian="";
-        Date date = new Date();
-        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
-        date.setTime(shuzi);//java里面应该是按毫秒
-        shijian=sdf.format(date);
-        return shijian;
-    }
+
 
     public static int adjustFontSize(int paramInt1, int paramInt2)
     {
@@ -105,13 +98,13 @@ public class cijiyi extends AppCompatActivity {
     }
 
 
-    public String[] getRandomStrings(){
-        String[] rets=new String[level];
+    public ArrayList<String> getRandomStrings(){
+        ArrayList<String> rets=new ArrayList();
         Random r = new Random();
         int ciStringSums=this.ci.length;
         for(int i=0;i<level;i++){
             int xiabiao=r.nextInt(ciStringSums);
-            rets[i]=ci[xiabiao];
+            rets.add(ci[xiabiao]);
         }
         return rets;
     }
@@ -129,35 +122,13 @@ public class cijiyi extends AppCompatActivity {
         jiyill=(LinearLayout)findViewById(R.id.jiyill);
         cijiyibtstart=(Button)findViewById(R.id.jiyibtstart);
         jiyibtok=(Button)findViewById(R.id.jiyibtok);
-        String levelstring=b.getString("level").trim();
-        switch(levelstring){
-            case "5个词":{
-                this.level = 5;
-                break;
-            }
-            case "10个词":{
-                this.level = 10;
-                break;
-            }
-            case "20个词":{
-                this.level = 20;
-                break;
-            }
-            case "50个词":{
-                this.level = 50;
-                break;
-            }
-            case "100个词":{
-                this.level = 100;
-                break;
-            }
-        }
+        level=b.getInt("level");
+
         this.randomStrings=getRandomStrings();
         cijiyibtstart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 cijiyibtstart.setClickable(false);
-                String message="";
                 LinearLayout hll=new LinearLayout(cijiyi.this);
                 hll.setGravity(Gravity.CENTER);
                 hll.setPadding(0, 5, 0, 0);
@@ -166,7 +137,7 @@ public class cijiyi extends AppCompatActivity {
                 hll.setGravity(1);
                 for(int ii=0;ii<cijiyi.this.level;ii++){
                     EditText et=new EditText(cijiyi.this);
-                    et.setText(randomStrings[ii]);
+                    et.setText(randomStrings.get(ii));
                     et.setTextAlignment(EditText.TEXT_ALIGNMENT_CENTER);
                     et.setLayoutParams(new ViewGroup.LayoutParams(cijiyi.this.width / 5, -2));
                     et.setFocusable(false);
@@ -199,7 +170,7 @@ public class cijiyi extends AppCompatActivity {
                 Intent intent = new Intent(cijiyi.this, cihuiyi.class);
                 intent.putExtra("level",cijiyi.this.level);
                 intent.putExtra("time", cijiyi.this.zongmiao);
-                intent.putExtra("shuzu", cijiyi.this.randomStrings);
+                intent.putExtra("randomStrings", cijiyi.this.randomStrings);
                 cijiyi.this.startActivity(intent);
                 cijiyi.this.finish();
                 return;

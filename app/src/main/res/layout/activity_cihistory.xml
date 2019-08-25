@@ -5,5 +5,37 @@ xmlns:tools="http://schemas.android.com/tools"
 android:layout_width="match_parent"
 android:layout_height="match_parent"
 tools:context=".cihistory">
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme" >
+        <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/btret"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.4"
+                android:text="返回" />
+
+            <TextView
+                android:id="@+id/tvtitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.2"
+                android:text="记忆记录"
+                android:textAlignment="center" />
+            <Button
+                android:id="@+id/btretmain"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.4"
+                android:layout_alignParentLeft="true"
+                android:text="首页" />
+        </LinearLayout>
+    </androidx.appcompat.widget.Toolbar>
 <ListView android:id="@+id/lv" android:layout_width="fill_parent" android:layout_height="wrap_content" />
 </LinearLayout>

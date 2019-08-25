@@ -3,24 +3,30 @@ package com.rahjim.xisuidan;
 public class rememberdata
 {
     String date;
-    String level;
-    int rightcount;
+    int level;
+    String wrrate;
     String type;
     String usetime;
+    int timeint;
 
     public String getDate()
     {
         return this.date;
     }
 
-    public String getLevel()
+    public int getLevel()
     {
         return this.level;
     }
 
-    public int getRightcount()
+    public int getTimeint()
     {
-        return this.rightcount;
+        return this.timeint;
+    }
+
+    public String getWrrate()
+    {
+        return this.wrrate;
     }
 
     public String getType()
@@ -38,14 +44,14 @@ public class rememberdata
         this.date = paramString;
     }
 
-    public void setLevel(String paramString)
+    public void setLevel(int paramInt)
     {
-        this.level = paramString;
+        this.level = paramInt;
     }
 
-    public void setRightcount(int paramInt)
+    public void setWrrate(String paramString)
     {
-        this.rightcount = paramInt;
+        this.wrrate = paramString;
     }
 
     public void setType(String paramString)
@@ -57,4 +63,10 @@ public class rememberdata
     {
         this.usetime = paramString;
     }
+
+    public void setTimeint(int paramInt)
+    {
+        this.timeint = paramInt;
+    }
+
 }

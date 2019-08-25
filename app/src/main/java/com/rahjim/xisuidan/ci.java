@@ -35,6 +35,7 @@ public class ci extends AppCompatActivity {
             {
                 Intent intent = new Intent(ci.this, cihistory.class);
                 ci.this.startActivity(intent);
+                finish();
             }
         });
         this.rg = ((RadioGroup)findViewById(R.id.rg));
@@ -53,8 +54,33 @@ public class ci extends AppCompatActivity {
             public void onClick(View paramAnonymousView)
             {
                 Intent intent = new Intent(ci.this, cijiyi.class);
-                intent.putExtra("level", ci.this.et.getText().toString());
+                int level=5;
+                String levelstring=ci.this.et.getText().toString().trim();
+                switch(levelstring){
+                    case "5个词":{
+                        level = 5;
+                        break;
+                    }
+                    case "10个词":{
+                        level = 10;
+                        break;
+                    }
+                    case "20个词":{
+                        level = 20;
+                        break;
+                    }
+                    case "50个词":{
+                        level = 50;
+                        break;
+                    }
+                    case "100个词":{
+                        level = 100;
+                        break;
+                    }
+                }
+                intent.putExtra("level", level);
                 ci.this.startActivity(intent);
+                finish();
             }
         });
         this.btret=(Button)findViewById(R.id.btret);

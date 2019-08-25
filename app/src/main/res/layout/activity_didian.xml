@@ -29,7 +29,7 @@
                 android:text="难度选择"
                 android:textAlignment="center" />
             <Button
-                android:id="@+id/btretmian"
+                android:id="@+id/btretmain"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.4"

@@ -2,26 +2,27 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
-<LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="wrap_content">
-    <LinearLayout android:orientation="horizontal" android:background="@drawable/border" android:layout_width="fill_parent" android:layout_height="wrap_content">
-        <LinearLayout android:orientation="horizontal" android:background="@drawable/border" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_weight="2.0">
-            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="用时：" />
-            <TextView android:id="@+id/itvusetime" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="12:33" />
+    <LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="wrap_content">
+        <LinearLayout android:orientation="horizontal" android:background="@drawable/border" android:layout_width="fill_parent" android:layout_height="wrap_content">
+            <LinearLayout android:orientation="horizontal" android:background="@drawable/border" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_weight="2.0">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="用时：" />
+                <TextView android:id="@+id/itvusetime" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="12:33" />
+            </LinearLayout>
+            <LinearLayout android:orientation="horizontal" android:background="@drawable/border" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_weight="1.0">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="难度：" />
+                <TextView android:id="@+id/itvlevel" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="100个词语" />
+            </LinearLayout>
         </LinearLayout>
-        <LinearLayout android:orientation="horizontal" android:background="@drawable/border" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_weight="1.0">
-            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="难度：" />
-            <TextView android:id="@+id/itvlevel" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="100个数字" />
+        <LinearLayout android:orientation="horizontal" android:background="@drawable/border" android:layout_width="fill_parent" android:layout_height="wrap_content">
+            <LinearLayout android:orientation="horizontal" android:background="@drawable/border" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_weight="2.0">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="正确率：" />
+                <TextView android:id="@+id/itvwrrate" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="0.97" />
+            </LinearLayout>
+            <LinearLayout android:orientation="horizontal" android:background="@drawable/border" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_weight="1.0">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="日期：" />
+                <TextView android:id="@+id/itvdate" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="2015年03月22日" />
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
-    <LinearLayout android:orientation="horizontal" android:background="@drawable/border" android:layout_width="fill_parent" android:layout_height="wrap_content">
-        <LinearLayout android:orientation="horizontal" android:background="@drawable/border" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_weight="2.0">
-            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="正确数：" />
-            <TextView android:id="@+id/itvrightcount" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="0.97" />
-        </LinearLayout>
-        <LinearLayout android:orientation="horizontal" android:background="@drawable/border" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_weight="1.0">
-            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="日期：" />
-            <TextView android:id="@+id/itvdate" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="2015年03月22日" />
-        </LinearLayout>
-    </LinearLayout>
-</LinearLayout>
+
 </LinearLayout>
