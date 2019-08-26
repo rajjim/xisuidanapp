@@ -34,6 +34,7 @@ public class pu extends AppCompatActivity {
             {
                 Intent intent = new Intent(pu.this, puhistory.class);
                 pu.this.startActivity(intent);
+                finish();
             }
         });
         this.rg = ((RadioGroup)findViewById(R.id.rg));
@@ -52,8 +53,33 @@ public class pu extends AppCompatActivity {
             public void onClick(View paramAnonymousView)
             {
                 Intent intent = new Intent(pu.this, pujiyi.class);
-                intent.putExtra("level", pu.this.et.getText().toString());
+                int level=5;
+                String levelstring=pu.this.et.getText().toString().trim();
+                switch(levelstring){
+                    case "6张牌":{
+                        level = 6;
+                        break;
+                    }
+                    case "12张牌":{
+                        level = 12;
+                        break;
+                    }
+                    case "24张牌":{
+                        level = 24;
+                        break;
+                    }
+                    case "36张牌":{
+                        level = 36;
+                        break;
+                    }
+                    case "52张牌":{
+                        level = 52;
+                        break;
+                    }
+                }
+                intent.putExtra("level", level);
                 pu.this.startActivity(intent);
+                finish();
             }
         });
         this.btret=(Button)findViewById(R.id.btret);
