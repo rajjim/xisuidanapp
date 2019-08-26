@@ -33,6 +33,8 @@ public class cihuiyi extends AppCompatActivity {
     int xiangyingcishu = 0;
     int time;
     ArrayList<EditText> etlist = new ArrayList();
+    DatabaseHelper dbhelper;
+    SQLiteDatabase db;
 
 
 
@@ -46,7 +48,9 @@ public class cihuiyi extends AppCompatActivity {
         display.getSize(localPoint);
         this.width = localPoint.x;
         this.height = localPoint.y;
-
+        //init database
+        this.dbhelper=new DatabaseHelper(this);
+        this.db=dbhelper.getWritableDatabase();
         level=this.getIntent().getIntExtra("level",0);
         time=this.getIntent().getIntExtra("time",0);
         final ArrayList<String> randomStrings=this.getIntent().getStringArrayListExtra("randomStrings");
@@ -123,8 +127,6 @@ public class cihuiyi extends AppCompatActivity {
                     }
                 }
                 String wrrate=rightcount+"/"+level;
-                SQLiteDatabase db=SQLiteDatabase.openOrCreateDatabase("/data/data/com.rahjim.xisuidan/databases/xisuidan.db",null);
-                createTable(db);
                 String datestr = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Calendar.getInstance().getTime());
                 ContentValues localContentValues = new ContentValues();
                 localContentValues.put("type", "ci");
@@ -151,12 +153,6 @@ public class cihuiyi extends AppCompatActivity {
         });
     }
 
-    void createTable(SQLiteDatabase db){
-        try {
-            db.execSQL("create table memory(type varchar(20) not null , timeint int not null,usetime varchar(20) not null,level int not null,wrrate varchar(20) not null,date timestamp not null);");
-        }catch (Exception e){}
-
-    }
 
     String timeIntToString(int zongmiao){
         int s=zongmiao/216000;

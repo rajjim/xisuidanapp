@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class cihistory extends AppCompatActivity {
-    DatabaseHelper database;
+    DatabaseHelper dbhelper;
     SQLiteDatabase db;
     ArrayList<HashMap<String, Object>> listitem;
     ListView lv;
@@ -33,14 +33,12 @@ public class cihistory extends AppCompatActivity {
     SimpleDateFormat sft;
     Button btret;
     Button btretmain;
-
     public boolean onContextItemSelected(MenuItem paramMenuItem)
     {
         int i = ((AdapterView.AdapterContextMenuInfo)paramMenuItem.getMenuInfo()).position;
         if (paramMenuItem.getItemId() == 0)
         {
             map=listitem.get(i);
-            db=SQLiteDatabase.openOrCreateDatabase("/data/data/com.rahjim.xisuidan/databases/xisuidan.db",null);
             db.execSQL("delete from memory where type = 'ci' and date = '"+map.get("date")+"'");
             this.listitem.remove(i);
             this.position = i;
@@ -52,7 +50,7 @@ public class cihistory extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_cihistory);
+        setContentView(R.layout.history);
         btret=(Button)findViewById(R.id.btret);
         btretmain=(Button)findViewById(R.id.btretmain);
 
@@ -77,7 +75,8 @@ public class cihistory extends AppCompatActivity {
         this.map = new HashMap();
         this.sfd = new SimpleDateFormat("yyyy-MM-dd");
         this.sft = new SimpleDateFormat("HH:mm:ss");
-        db=SQLiteDatabase.openOrCreateDatabase("/data/data/com.rahjim.xisuidan/databases/xisuidan.db",null);
+        this.dbhelper=new DatabaseHelper(this);
+        this.db=dbhelper.getWritableDatabase();
         Cursor cursor = this.db.query("memory", null, "type=?", new String[] { "ci" }, null, null, null);
         int count = 0;
         while(cursor.moveToNext()){
@@ -86,7 +85,7 @@ public class cihistory extends AppCompatActivity {
         cursor.moveToFirst();
         for (int i=0;i<count;i++)
         {
-            this.sa = new SimpleAdapter(this, this.listitem, R.layout.ciitem, new String[] { "usetime", "level", "wrrate", "date" }, new int[] { R.id.itvusetime,R.id.itvlevel,R.id.itvwrrate,R.id.itvdate});
+            this.sa = new SimpleAdapter(this, this.listitem, R.layout.item, new String[] { "usetime", "level", "wrrate", "date" }, new int[] { R.id.itvusetime,R.id.itvlevel,R.id.itvwrrate,R.id.itvdate});
             this.lv.setAdapter(this.sa);
             this.lv.setOnCreateContextMenuListener(new View.OnCreateContextMenuListener() {
                 @Override
@@ -109,7 +108,7 @@ public class cihistory extends AppCompatActivity {
             map.put("level", pl.getLevel());
             map.put("wrrate", pl.getWrrate());
             map.put("date", pl.getDate());
-            Toast.makeText(cihistory.this,map.toString(),Toast.LENGTH_LONG).show();
+//            Toast.makeText(cihistory.this,map.toString(),Toast.LENGTH_LONG).show();
             this.listitem.add(map);
         }
 
