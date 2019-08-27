@@ -16,6 +16,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.HorizontalScrollView;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -33,7 +35,11 @@ public class puhuiyi extends AppCompatActivity {
     int time;
     DatabaseHelper dbhelper;
     SQLiteDatabase db;
-    ArrayList<EditText> etlist = new ArrayList();
+
+    //prepare pu list
+    ArrayList<ImageButton> prlist=new ArrayList();
+    //chooseButtonList
+    ArrayList<ImageButton> etlist = new ArrayList();
 
 
     int[] pu = {R.drawable.pu00,R.drawable.pu01,R.drawable.pu02,R.drawable.pu03,R.drawable.pu04,R.drawable.pu05,R.drawable.pu06,R.drawable.pu07,R.drawable.pu08,R.drawable.pu09,R.drawable.pu10,
@@ -44,7 +50,7 @@ public class puhuiyi extends AppCompatActivity {
             R.drawable.pu51,R.drawable.pu52
     };
 
-    int currentedit=2000;
+    int currentedit=4000;
 
 
 
@@ -63,62 +69,85 @@ public class puhuiyi extends AppCompatActivity {
         this.db=dbhelper.getWritableDatabase();
         level=this.getIntent().getIntExtra("level",0);
         time=this.getIntent().getIntExtra("time",0);
-        final ArrayList<String> randomStrings=this.getIntent().getStringArrayListExtra("randomStrings");
+        final ArrayList<Integer> randomStrings=this.getIntent().getIntegerArrayListExtra("randomStrings");
 
         huiyill=(LinearLayout)findViewById(R.id.huiyill);
         huiyibtok=(Button)findViewById(R.id.huiyibtok);
+
+        HorizontalScrollView hsv=new HorizontalScrollView(puhuiyi.this);
+        hsv.setLayoutParams(new ViewGroup.LayoutParams(-1, -2) );
 
         LinearLayout hll=new LinearLayout(puhuiyi.this);
         hll.setLayoutParams(new ViewGroup.LayoutParams(-1, -2));
         hll.setOrientation(LinearLayout.HORIZONTAL);
         hll.setGravity(1);
 
-        //init et list
-        for(int ii=0;ii<level;ii++){
-            EditText et=new EditText(puhuiyi.this);
-            et.setLayoutParams(new ViewGroup.LayoutParams(this.width / 11, -2));
-            et.setFilters(new InputFilter[] { new InputFilter.LengthFilter(1) });
-            et.setId(ii + 2000);
-            et.setPadding(0, 0, 0, 0);
-            et.setGravity(17);
-            et.setTextSize(0, this.width / 23);
-            et.setInputType(2);
+        hsv.addView(hll);
+        //init ImageButton list
+        for(int ii=1;ii<53;ii++){
+            ImageButton et=new ImageButton(puhuiyi.this);
+            et.setLayoutParams(new ViewGroup.LayoutParams(puhuiyi.this.width / 2, puhuiyi.this.width / 2 * 150 / 105));
+            et.setBackgroundResource(pu[ii]);
 
-
-            //add delete content jump to fore et's function
-            et.setOnKeyListener(new View.OnKeyListener() {
+            //set prepare pu button function
+            et.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public boolean onKey(View view, int i, KeyEvent keyEvent) {
-                    currentedit=view.getId();
-                    EditText nowet=(EditText) view;
-                    if (i == KeyEvent.KEYCODE_DEL)
-                    {
-                        if(nowet.getText().toString().trim().equals("")){
-                            i= (int)(view.getId()) - 1;
-                            if (i >= 2000) {
-                                ((EditText)puhuiyi.this.findViewById(i)).requestFocus();
-                            }
-                        }
-                        else{
-                            nowet.setText("");
-                        }
-                    }
+                public void onClick(View view) {
 
-
-                    return false;
                 }
             });
+
+
+            prlist.add(et);
+            hll.addView(et);
+
+        }
+        huiyill.addView(hsv);
+
+        //reset button
+        Button btreset=new Button(this);
+        btreset.setText("撤回");
+        btreset.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
+        huiyill.addView(btreset);
+
+
+
+        hsv=new HorizontalScrollView(puhuiyi.this);
+        hsv.setLayoutParams(new ViewGroup.LayoutParams(-1, -2) );
+        hll=new LinearLayout(puhuiyi.this);
+        hll.setLayoutParams(new ViewGroup.LayoutParams(-1, -2));
+        hll.setOrientation(LinearLayout.HORIZONTAL);
+        hll.setGravity(1);
+        hsv.addView(hll);
+        //init ImageButton list
+        for(int ii=0;ii<level;ii++){
+            ImageButton et=new ImageButton(puhuiyi.this);
+            et.setLayoutParams(new ViewGroup.LayoutParams(puhuiyi.this.width / 2, puhuiyi.this.width / 2 * 150 / 105));
+            et.setBackgroundResource(pu[0]);
+
+            //set prepare pu button function
+            et.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                }
+            });
+
+
             etlist.add(et);
             hll.addView(et);
 
-            if((ii+1)%10==0){
-                huiyill.addView(hll);
-                hll=new LinearLayout(puhuiyi.this);
-                hll.setLayoutParams(new ViewGroup.LayoutParams(-1, -2));
-                hll.setOrientation(LinearLayout.HORIZONTAL);
-                hll.setGravity(1);
-            }
         }
+
+        huiyill.addView(hsv);
+
+
         //add commit function to button
         huiyibtok.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -130,11 +159,11 @@ public class puhuiyi extends AppCompatActivity {
                 // 4.save the result to sqlist
                 // 5.post level to next activity
                 ArrayList<Integer> wrongindexs=new ArrayList();
-                ArrayList<String> answerlist=new ArrayList();
+                ArrayList<Integer> answerlist=new ArrayList();
                 int rightcount=0;
                 for(int i=0;i<level;i++) {
-                    answerlist.add(etlist.get(i).getText().toString().trim());
-                    if(answerlist.get(i).equals(randomStrings.get(i))){
+                    answerlist.add(etlist.get(i).getId());
+                    if(answerlist.get(i)==randomStrings.get(i)){
                         rightcount++;
                     }else{
                         wrongindexs.add(i);
