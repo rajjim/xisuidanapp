@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.text.Editable;
@@ -19,6 +20,7 @@ import android.widget.EditText;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
@@ -41,6 +43,8 @@ public class puhuiyi extends AppCompatActivity {
     //chooseButtonList
     ArrayList<ImageButton> etlist = new ArrayList();
 
+    int nowetid=0;
+    int nowtvid=0;
 
     int[] pu = {R.drawable.pu00,R.drawable.pu01,R.drawable.pu02,R.drawable.pu03,R.drawable.pu04,R.drawable.pu05,R.drawable.pu06,R.drawable.pu07,R.drawable.pu08,R.drawable.pu09,R.drawable.pu10,
             R.drawable.pu11,R.drawable.pu12,R.drawable.pu13,R.drawable.pu14,R.drawable.pu15,R.drawable.pu16,R.drawable.pu17,R.drawable.pu18,R.drawable.pu19,R.drawable.pu20,
@@ -50,7 +54,6 @@ public class puhuiyi extends AppCompatActivity {
             R.drawable.pu51,R.drawable.pu52
     };
 
-    int currentedit=4000;
 
 
 
@@ -127,21 +130,50 @@ public class puhuiyi extends AppCompatActivity {
         hsv.addView(hll);
         //init ImageButton list
         for(int ii=0;ii<level;ii++){
+            LinearLayout vll=new LinearLayout(puhuiyi.this);
+            vll.setLayoutParams(new ViewGroup.LayoutParams(-1, -2));
+            vll.setOrientation(LinearLayout.VERTICAL);
             ImageButton et=new ImageButton(puhuiyi.this);
             et.setLayoutParams(new ViewGroup.LayoutParams(puhuiyi.this.width / 2, puhuiyi.this.width / 2 * 150 / 105));
             et.setBackgroundResource(pu[0]);
-
+            TextView tv=new TextView(puhuiyi.this);
+            tv.setText(String.valueOf(ii+1));
+            tv.setGravity(1);
+            tv.setTextAlignment(TextView.TEXT_ALIGNMENT_CENTER);
             //set prepare pu button function
             et.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                        //is cliked?
+
+                        //set last select et bgcolor to white
+                        if(nowtvid!=0&&nowetid!=0) {
+                            try {
+                                TextView textview = (TextView) puhuiyi.this.findViewById(nowtvid);
+                                textview.setBackgroundColor(Color.WHITE);
+                                System.out.println(textview.getText());
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+
+                        nowetid=view.getId();
+                        //get parent vll
+                        LinearLayout vl = (LinearLayout) view.getParent();
+                        //get tv and set backgrand color
+                        TextView textview = (TextView) vl.getChildAt(1);
+                        nowtvid=textview.getId();
+                        textview.setBackgroundColor(Color.CYAN);
+
 
                 }
             });
 
 
             etlist.add(et);
-            hll.addView(et);
+            vll.addView(et);
+            vll.addView(tv);
+            hll.addView(vll);
 
         }
 
