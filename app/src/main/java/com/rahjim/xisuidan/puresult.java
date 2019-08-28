@@ -13,6 +13,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.HorizontalScrollView;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -86,20 +88,13 @@ public class puresult extends AppCompatActivity {
         //get intent data
         level=this.getIntent().getIntExtra("level",0);
         time=this.getIntent().getIntExtra("time",0);
-        ArrayList<String> randomStrings=this.getIntent().getStringArrayListExtra("randomStrings");
+        ArrayList<Integer> randomStrings=this.getIntent().getIntegerArrayListExtra("randomStrings");
         ArrayList<Integer> wrongindexs=this.getIntent().getIntegerArrayListExtra("wrongindexs");
         String wrrate=this.getIntent().getStringExtra("wrrate");
-        ArrayList<String> answerlist=this.getIntent().getStringArrayListExtra("answerlist");
+        ArrayList<Integer> answerlist=this.getIntent().getIntegerArrayListExtra("answerlist");
 
         String titletext="用时："+timeIntToString(time)+"，正确率："+wrrate;
         tvtitle.setText(titletext);
-
-        LinearLayout hll=new LinearLayout(puresult.this);
-        hll.setGravity(Gravity.CENTER);
-        hll.setPadding(0, 5, 0, 0);
-        hll.setLayoutParams(new ViewGroup.LayoutParams(-1, -2));
-        hll.setOrientation(LinearLayout.HORIZONTAL);
-        hll.setGravity(1);
         int wrongindex;
         int wrongxiabiao=0;
         int wrongcount=wrongindexs.size();
@@ -107,65 +102,72 @@ public class puresult extends AppCompatActivity {
             wrongindex=-1;
         else
             wrongindex=wrongindexs.get(wrongxiabiao++);
-        for(int ii=0;ii<puresult.this.level;ii++){
-
-            EditText et=new EditText(puresult.this);
-            et.setText(answerlist.get(ii));
-            et.setTextAlignment(EditText.TEXT_ALIGNMENT_CENTER);
-            et.setLayoutParams(new ViewGroup.LayoutParams(puresult.this.width / 11, -2));
-            et.setFilters(new InputFilter[] { new InputFilter.LengthFilter(1) });
-            et.setInputType(2);
-            et.setFocusable(false);
-            et.setInputType(0);
+        HorizontalScrollView hsv=new HorizontalScrollView(puresult.this);
+        hsv.setLayoutParams(new ViewGroup.LayoutParams(-1, -2) );
+        LinearLayout hll=new LinearLayout(puresult.this);
+        hll.setLayoutParams(new ViewGroup.LayoutParams(-1, -2));
+        hll.setOrientation(LinearLayout.HORIZONTAL);
+        hll.setGravity(1);
+        hsv.addView(hll);
+        //init ImageButton list
+        for(int ii=0;ii<level;ii++){
+            LinearLayout vll=new LinearLayout(puresult.this);
+            vll.setLayoutParams(new ViewGroup.LayoutParams(-1, -2));
+            vll.setOrientation(LinearLayout.VERTICAL);
+            ImageButton et=new ImageButton(puresult.this);
+            et.setLayoutParams(new ViewGroup.LayoutParams(puresult.this.width / 2, puresult.this.width / 2 * 150 / 105));
+            et.setBackgroundResource(answerlist.get(ii));
+            TextView tv=new TextView(puresult.this);
+            tv.setText(String.valueOf(ii+1));
+            tv.setGravity(1);
+            tv.setTextAlignment(TextView.TEXT_ALIGNMENT_CENTER);
             if(wrongindex==ii){
-                et.setBackgroundColor(Color.RED);
+                tv.setBackgroundColor(Color.RED);
                 if(wrongxiabiao+1<=wrongcount)
                     wrongindex=wrongindexs.get(wrongxiabiao++);
             }
-            hll.addView(et);
+            vll.addView(et);
+            vll.addView(tv);
+            hll.addView(vll);
 
-            if((ii+1)%10==0){
-                resultll.addView(hll);
-                hll=new LinearLayout(puresult.this);
-                hll.setGravity(Gravity.CENTER);
-                hll.setPadding(0, 5, 0, 0);
-                hll.setLayoutParams(new ViewGroup.LayoutParams(-1, -2));
-                hll.setOrientation(LinearLayout.HORIZONTAL);
-                hll.setGravity(1);
-            }
         }
+
+        resultll.addView(hsv);
+        
+        
         TextView tvright=new TextView(puresult.this);
         tvright.setText("正确答案");
         tvright.setTextAlignment(EditText.TEXT_ALIGNMENT_CENTER);
         tvright.setGravity(1);
         resultll.addView(tvright);
+
+
+        hsv=new HorizontalScrollView(puresult.this);
+        hsv.setLayoutParams(new ViewGroup.LayoutParams(-1, -2) );
         hll=new LinearLayout(puresult.this);
-        hll.setGravity(Gravity.CENTER);
-        hll.setPadding(0, 5, 0, 0);
         hll.setLayoutParams(new ViewGroup.LayoutParams(-1, -2));
         hll.setOrientation(LinearLayout.HORIZONTAL);
         hll.setGravity(1);
-        for(int ii=0;ii<puresult.this.level;ii++){
-            EditText et=new EditText(puresult.this);
-            et.setText(randomStrings.get(ii));
-            et.setTextAlignment(EditText.TEXT_ALIGNMENT_CENTER);
-            et.setLayoutParams(new ViewGroup.LayoutParams(puresult.this.width / 11, -2));
-            et.setFilters(new InputFilter[] { new InputFilter.LengthFilter(1) });
-            et.setInputType(2);
-            et.setFocusable(false);
-            et.setInputType(0);
-            hll.addView(et);
+        hsv.addView(hll);
+        //init ImageButton list
+        for(int ii=0;ii<level;ii++){
+            LinearLayout vll=new LinearLayout(puresult.this);
+            vll.setLayoutParams(new ViewGroup.LayoutParams(-1, -2));
+            vll.setOrientation(LinearLayout.VERTICAL);
+            ImageButton et=new ImageButton(puresult.this);
+            et.setLayoutParams(new ViewGroup.LayoutParams(puresult.this.width / 2, puresult.this.width / 2 * 150 / 105));
+            et.setBackgroundResource(randomStrings.get(ii));
+            TextView tv=new TextView(puresult.this);
+            tv.setText(String.valueOf(ii+1));
+            tv.setGravity(1);
+            tv.setTextAlignment(TextView.TEXT_ALIGNMENT_CENTER);
+            vll.addView(et);
+            vll.addView(tv);
+            hll.addView(vll);
 
-            if((ii+1)%10==0){
-                resultll.addView(hll);
-                hll=new LinearLayout(puresult.this);
-                hll.setGravity(Gravity.CENTER);
-                hll.setPadding(0, 5, 0, 0);
-                hll.setLayoutParams(new ViewGroup.LayoutParams(-1, -2));
-                hll.setOrientation(LinearLayout.HORIZONTAL);
-                hll.setGravity(1);
-            }
         }
+
+        resultll.addView(hsv);
 
 
     }

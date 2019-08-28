@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.Point;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputFilter;
@@ -26,10 +27,15 @@ import android.widget.Toast;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.ResourceBundle;
+import java.util.Stack;
 
 public class puhuiyi extends AppCompatActivity {
 
     LinearLayout huiyill;
+    LinearLayout uphll;
     Button huiyibtok;
     int height;
     int width;
@@ -39,12 +45,14 @@ public class puhuiyi extends AppCompatActivity {
     SQLiteDatabase db;
 
     //prepare pu list
-    ArrayList<ImageButton> prlist=new ArrayList();
+    ArrayList<IbHelper> prlist=new ArrayList();
     //chooseButtonList
-    ArrayList<ImageButton> etlist = new ArrayList();
+    ArrayList<IbHelper> etlist = new ArrayList();
 
-    int nowetid=0;
-    int nowtvid=0;
+    Stack<IbHelper> prstack=new Stack();
+
+    Map<Integer,ImageButton> predelete=new HashMap();
+    Map<Integer,ImageButton> etmap=new HashMap();
 
     int[] pu = {R.drawable.pu00,R.drawable.pu01,R.drawable.pu02,R.drawable.pu03,R.drawable.pu04,R.drawable.pu05,R.drawable.pu06,R.drawable.pu07,R.drawable.pu08,R.drawable.pu09,R.drawable.pu10,
             R.drawable.pu11,R.drawable.pu12,R.drawable.pu13,R.drawable.pu14,R.drawable.pu15,R.drawable.pu16,R.drawable.pu17,R.drawable.pu18,R.drawable.pu19,R.drawable.pu20,
@@ -53,6 +61,8 @@ public class puhuiyi extends AppCompatActivity {
             R.drawable.pu41,R.drawable.pu42,R.drawable.pu43,R.drawable.pu44,R.drawable.pu45,R.drawable.pu46,R.drawable.pu47,R.drawable.pu48,R.drawable.pu49,R.drawable.pu50,
             R.drawable.pu51,R.drawable.pu52
     };
+
+    ArrayList<Integer> selectedet=new ArrayList();
 
 
 
@@ -80,12 +90,12 @@ public class puhuiyi extends AppCompatActivity {
         HorizontalScrollView hsv=new HorizontalScrollView(puhuiyi.this);
         hsv.setLayoutParams(new ViewGroup.LayoutParams(-1, -2) );
 
-        LinearLayout hll=new LinearLayout(puhuiyi.this);
-        hll.setLayoutParams(new ViewGroup.LayoutParams(-1, -2));
-        hll.setOrientation(LinearLayout.HORIZONTAL);
-        hll.setGravity(1);
+        uphll=new LinearLayout(puhuiyi.this);
+        uphll.setLayoutParams(new ViewGroup.LayoutParams(-1, -2));
+        uphll.setOrientation(LinearLayout.HORIZONTAL);
+        uphll.setGravity(1);
 
-        hsv.addView(hll);
+        hsv.addView(uphll);
         //init ImageButton list
         for(int ii=1;ii<53;ii++){
             ImageButton et=new ImageButton(puhuiyi.this);
@@ -97,12 +107,55 @@ public class puhuiyi extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
 
+                    //get res
+                    int res=0;
+                    IbHelper ih=new IbHelper(null,0,0,false,0,null);
+                    int index=0;
+                    for(int i=0;i<52;i++){
+                        ih=prlist.get(i);
+                        if(ih.et==view){
+                            res=ih.res;
+                            index=ih.index-1;
+                            break;
+                        }
+                    }
+
+                    ih.res=pu[0];
+                    ih.et.setBackgroundResource(pu[0]);
+                    prstack.push(ih);
+
+
+
+
+
+                    //location to we need
+                    for(int i=0;i<level;i++){
+                        ih=etlist.get(i);
+                        if(ih.selected){
+                            ih.tv.setBackgroundColor(Color.WHITE);
+                            ih.et.setBackgroundResource(res);
+                            ih.res=res;
+                            ih.selected=false;
+                            index=ih.index;
+                            if((i+1)!=level){
+                                ih=etlist.get(i+1);
+                                ih.selected=true;
+                                ih.tv.setBackgroundColor(Color.CYAN);
+                                ih.lastindex=index;
+                            }
+                            break;
+                        }
+                    }
+
+
+
+
                 }
             });
 
-
-            prlist.add(et);
-            hll.addView(et);
+            IbHelper ih=new IbHelper(et,pu[ii],ii,false,0,null);
+            prlist.add(ih);
+            uphll.addView(et);
 
         }
         huiyill.addView(hsv);
@@ -113,7 +166,31 @@ public class puhuiyi extends AppCompatActivity {
         btreset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                IbHelper ih;
+                for(int i=0;i<level;i++){
+                    ih=etlist.get(i);
+                    if(ih.selected){
+                        int lastindex=ih.lastindex;
+                        ih.selected=false;
+                        ih.lastindex=0;
+                        ih.et.setBackgroundResource(pu[0]);
+                        ih.res=pu[0];
+                        ih.tv.setBackgroundColor(Color.WHITE);
 
+                        //restore pre list
+                        if(!prstack.isEmpty()) {
+                            ih = prstack.pop();
+                            ih.et.setBackgroundResource(pu[ih.index]);
+                            ih.res = pu[ih.index];
+                        }
+                        //find last one
+                        ih=etlist.get(lastindex);
+                        ih.selected=true;
+                        ih.tv.setBackgroundColor(Color.CYAN);
+
+                        break;
+                    }
+                }
             }
         });
 
@@ -123,7 +200,7 @@ public class puhuiyi extends AppCompatActivity {
 
         hsv=new HorizontalScrollView(puhuiyi.this);
         hsv.setLayoutParams(new ViewGroup.LayoutParams(-1, -2) );
-        hll=new LinearLayout(puhuiyi.this);
+        LinearLayout hll=new LinearLayout(puhuiyi.this);
         hll.setLayoutParams(new ViewGroup.LayoutParams(-1, -2));
         hll.setOrientation(LinearLayout.HORIZONTAL);
         hll.setGravity(1);
@@ -144,33 +221,42 @@ public class puhuiyi extends AppCompatActivity {
             et.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                        //is cliked?
 
-                        //set last select et bgcolor to white
-                        if(nowtvid!=0&&nowetid!=0) {
-                            try {
-                                TextView textview = (TextView) puhuiyi.this.findViewById(nowtvid);
-                                textview.setBackgroundColor(Color.WHITE);
-                                System.out.println(textview.getText());
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
+
+
+                    for(int i=0;i<level;i++) {
+
+                        IbHelper ih = etlist.get(i);
+
+                        if(ih.et==view){
+                            ih.selected=true;
+                            ih.tv.setBackgroundColor(Color.CYAN);
+                        }else{
+                            ih.tv.setBackgroundColor(Color.WHITE);
+                            ih.selected=false;
                         }
 
-                        nowetid=view.getId();
-                        //get parent vll
-                        LinearLayout vl = (LinearLayout) view.getParent();
-                        //get tv and set backgrand color
-                        TextView textview = (TextView) vl.getChildAt(1);
-                        nowtvid=textview.getId();
-                        textview.setBackgroundColor(Color.CYAN);
+                    }
+                        //set all unselected et bgcolor to white
+//                    LinearLayout chl=(LinearLayout) view.getParent().getParent();
+//                        for(int i=0;i<chl.getChildCount();i++){
+//                            LinearLayout cvl=(LinearLayout)chl.getChildAt(i);
+//                            TextView ctv=(TextView) cvl.getChildAt(1);
+//                            ctv.setBackgroundColor(Color.WHITE);
+//                        }
+
+
+//                        //get parent vll
+//                        LinearLayout vl = (LinearLayout) view.getParent();
+//                        //get tv and set backgrand color
+//                        TextView textview = (TextView) vl.getChildAt(1);
+//                        textview.setBackgroundColor(Color.CYAN);
 
 
                 }
             });
-
-
-            etlist.add(et);
+            IbHelper ih=new IbHelper(et,pu[0],ii,false,0,tv);
+            etlist.add(ih);
             vll.addView(et);
             vll.addView(tv);
             hll.addView(vll);
@@ -194,12 +280,15 @@ public class puhuiyi extends AppCompatActivity {
                 ArrayList<Integer> answerlist=new ArrayList();
                 int rightcount=0;
                 for(int i=0;i<level;i++) {
-                    answerlist.add(etlist.get(i).getId());
-                    if(answerlist.get(i)==randomStrings.get(i)){
+                    answerlist.add(etlist.get(i).res);
+                    if(answerlist.get(i).equals(randomStrings.get(i))){
                         rightcount++;
                     }else{
                         wrongindexs.add(i);
                     }
+                    System.out.println("res对比："+answerlist.get(i)+":"+randomStrings.get(i));
+                    System.out.println("index是："+etlist.get(i).index);
+                    System.out.println("rightcount"+rightcount+"   wrongndexs"+wrongindexs.size());
                 }
                 String wrrate=rightcount+"/"+level;
                 String datestr = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Calendar.getInstance().getTime());
