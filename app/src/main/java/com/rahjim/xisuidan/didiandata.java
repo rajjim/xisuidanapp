@@ -1,16 +1,16 @@
 package com.rahjim.xisuidan;
 
 public class didiandata {
-    int no;
+    int num;
     String pointname;
     public String getPointname()
     {
         return this.pointname;
     }
 
-    public int getNo()
+    public int getNum()
     {
-        return this.no;
+        return this.num;
     }
 
     public void setPointname(String paramString)
@@ -18,9 +18,9 @@ public class didiandata {
         this.pointname = paramString;
     }
 
-    public void setNo(int paramInt)
+    public void setNum(int paramInt)
     {
-        this.no = paramInt;
+        this.num = paramInt;
     }
 
 }

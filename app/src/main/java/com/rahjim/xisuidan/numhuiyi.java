@@ -111,7 +111,8 @@ public class numhuiyi extends AppCompatActivity {
                             if(nowet.getText().toString().trim().equals("")){
                                 i= (int)(view.getId()) - 1;
                                 if (i >= 2000) {
-                                    ((EditText)numhuiyi.this.findViewById(i)).requestFocus();
+
+                                    ((EditText)numhuiyi.this.findViewById(i)).requestFocus(1);
                                 }
                             }
                             else{

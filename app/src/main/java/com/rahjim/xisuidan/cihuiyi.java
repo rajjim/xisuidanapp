@@ -5,9 +5,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Path;
 import android.graphics.Point;
+import android.icu.text.RelativeDateTimeFormatter;
 import android.os.Bundle;
 import android.text.InputFilter;
+import android.text.Layout;
 import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
@@ -85,7 +88,16 @@ public class cihuiyi extends AppCompatActivity {
                             i= (int)(view.getId()) - 1;
                             EditText et2 = (EditText)cihuiyi.this.findViewById(i + 1);
                             if ((i >= 1000) && (et2.getText().toString().trim().equals(""))) {
-                                ((EditText)cihuiyi.this.findViewById(i)).requestFocus();
+                                ((EditText)cihuiyi.this.findViewById(i)).requestFocus(1);
+                            }
+                        }
+                        else if(i==KeyEvent.KEYCODE_ENTER){
+                            EditText thiset=(EditText)view;
+                            thiset.setText(thiset.getText().toString().trim().replace("\n",""));
+                            i= (int)(view.getId()) + 1;
+                            if(i<(1000+level)) {
+                                EditText et2 = (EditText) cihuiyi.this.findViewById(i + 1);
+                                ((EditText) cihuiyi.this.findViewById(i)).requestFocus(0);
                             }
                         }
                         return false;
