@@ -76,6 +76,7 @@ public class cihuiyi extends AppCompatActivity {
             et.setGravity(17);
             et.setTextSize(0, this.width / 23);
 
+
             //add delete content jump to fore et's function
             et.setOnKeyListener(new View.OnKeyListener() {
                 @Override
@@ -91,16 +92,16 @@ public class cihuiyi extends AppCompatActivity {
                                 ((EditText)cihuiyi.this.findViewById(i)).requestFocus(1);
                             }
                         }
-                        else if(i==KeyEvent.KEYCODE_ENTER){
-                            EditText thiset=(EditText)view;
-                            thiset.setText(thiset.getText().toString().trim().replace("\n",""));
-                            i= (int)(view.getId()) + 1;
-                            if(i<(1000+level)) {
-                                EditText et2 = (EditText) cihuiyi.this.findViewById(i + 1);
-                                ((EditText) cihuiyi.this.findViewById(i)).requestFocus(0);
-                            }
-                        }
                         return false;
+                    }
+                    if(i==KeyEvent.KEYCODE_ENTER){
+                        EditText thiset=(EditText)view;
+                        thiset.setText(thiset.getText().toString().trim().replace("\n",""));
+                        i= (int)(view.getId()) + 1;
+                        if(i<(1000+level)) {
+                            EditText et2 = (EditText) cihuiyi.this.findViewById(i + 1);
+                            ((EditText) cihuiyi.this.findViewById(i)).requestFocus(0);
+                        }
                     }
                     cihuiyi.this.xiangyingcishu = 0;
                     return false;
@@ -148,7 +149,7 @@ public class cihuiyi extends AppCompatActivity {
                 localContentValues.put("date", datestr);
                 localContentValues.put("wrrate", wrrate);
                 long result=db.insert("memory", null, localContentValues);
-                Toast.makeText(cihuiyi.this,"执行插入结果是："+result,Toast.LENGTH_LONG).show();
+//                Toast.makeText(cihuiyi.this,"执行插入结果是："+result,Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(cihuiyi.this, ciresult.class);
                 intent.putExtra("wrongindexs",wrongindexs);
                 intent.putExtra("wrrate",wrrate);

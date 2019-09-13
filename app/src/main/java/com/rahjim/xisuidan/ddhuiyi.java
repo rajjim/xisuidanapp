@@ -136,7 +136,7 @@ public class ddhuiyi extends AppCompatActivity {
                 localContentValues.put("date", datestr);
                 localContentValues.put("wrrate", wrrate);
                 long result=db.insert("memory", null, localContentValues);
-                Toast.makeText(ddhuiyi.this,"执行插入结果是："+result,Toast.LENGTH_LONG).show();
+//                Toast.makeText(ddhuiyi.this,"执行插入结果是："+result,Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(ddhuiyi.this, ddresult.class);
                 intent.putExtra("wrongindexs",wrongindexs);
                 intent.putExtra("wrrate",wrrate);

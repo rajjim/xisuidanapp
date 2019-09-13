@@ -19,8 +19,8 @@
 
                 <TextView
                     android:id="@+id/itvwrrate"
-                    android:layout_width="13dp"
-                    android:layout_height="9dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
                     android:text="0.97" />
             </LinearLayout>
             <LinearLayout android:orientation="horizontal" android:background="@drawable/border" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_weight="1.0">

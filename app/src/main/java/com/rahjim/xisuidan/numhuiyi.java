@@ -166,7 +166,7 @@ public class numhuiyi extends AppCompatActivity {
                 localContentValues.put("date", datestr);
                 localContentValues.put("wrrate", wrrate);
                 long result=db.insert("memory", null, localContentValues);
-                Toast.makeText(numhuiyi.this,"执行插入结果是："+result,Toast.LENGTH_LONG).show();
+//                Toast.makeText(numhuiyi.this,"执行插入结果是："+result,Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(numhuiyi.this, numresult.class);
                 intent.putExtra("wrongindexs",wrongindexs);
                 intent.putExtra("wrrate",wrrate);
