@@ -1,1 +1,2 @@
 include ':app'
+rootProject.name='洗髓丹'
